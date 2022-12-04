@@ -32,6 +32,8 @@ export default function PeliculaDetalles({navigation, route}) {
       overview: '',
       genres: [],
       vote_average: '',
+      release_date: '',
+      popularity: '',
     },
     videos,
     cast = [],
@@ -39,7 +41,15 @@ export default function PeliculaDetalles({navigation, route}) {
     isLoading,
   } = useMovieDetail(route.params.id);
 
-  const {title, backdrop_path, overview, genres, vote_average} = detalles;
+  const {
+    title,
+    backdrop_path,
+    overview,
+    genres,
+    vote_average,
+    release_date,
+    popularity,
+  } = detalles;
 
   const uri = `${urlImages}w780${backdrop_path}`;
   return (
@@ -94,6 +104,9 @@ export default function PeliculaDetalles({navigation, route}) {
                 return `${el.name} ${genres.length - 1 === i ? '' : '|'} `;
               })}
             </Text>
+            <Text style={styles.textGeneros}>Fecha: {release_date}</Text>
+            <Text style={styles.textGeneros}>Popularidad: {popularity}</Text>
+
             <View style={styles.divider} />
           </View>
           <View style={styles.description}>

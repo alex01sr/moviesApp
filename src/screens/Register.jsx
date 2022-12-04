@@ -34,6 +34,7 @@ export default function Register() {
       return;
     }
     dispatch(agregarUsuario(register));
+    toastGenerate('Registro exitoso, ya puedes iniciar sesion');
     navigation.goBack();
   };
 

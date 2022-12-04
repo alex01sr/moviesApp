@@ -34,7 +34,7 @@ export default function Login({navigation}) {
       toastGenerate('Inicio exitoso');
       dispatch(setJwt(usuario.email));
       dispatch(setDataUser(usuario));
-      dispatch(recuperarFavoritos(usuario.favoritos));
+      dispatch(recuperarFavoritos(usuario.favoritos ? usuario.favoritos : []));
       navigation.goBack();
     } else {
       toastGenerate('Datos incorrectos');

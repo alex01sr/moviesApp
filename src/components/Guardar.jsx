@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {agregarFavoritos, eliminarFavoritos} from '../../redux/actions';
 import {useFavoritos} from '../hooks/useFavoritos';
 export default function Guardar({movie}) {
+  console.log(movie);
   const {eliminar, guardar, state} = useFavoritos(movie);
   return (
     <TouchableOpacity onPress={state ? eliminar : guardar}>

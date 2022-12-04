@@ -13,7 +13,7 @@ export const useFavoritos = movie => {
     if (item) {
       setState(true);
     }
-  }, []);
+  }, [movie]);
 
   const dispatch = useDispatch();
   const guardar = () => {

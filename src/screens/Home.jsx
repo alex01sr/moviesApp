@@ -28,12 +28,11 @@ import ScrollMovies from '../components/ScrollMovies';
 const categorias = ['Todas', 'Accion', 'Comedia', 'Terror'];
 
 export default function Home() {
-  const {perfil} = useSelector(state => state);
-  const {actuales, populares, recomendadas, isLoading, configuration} =
-    useMovies();
+  const {perfil, usuarios} = useSelector(state => state);
+  const {actuales, populares, recomendadas, isLoading} = useMovies();
   const {urlImages} = useSelector(state => state);
 
-  console.log(configuration?.secure_base_url);
+  console.log(usuarios);
   return (
     <ScrollView>
       <View style={styles.container}>

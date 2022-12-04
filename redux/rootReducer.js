@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   usuarios: {},
-  urlImages: '',
+  urlImages: 'https://image.tmdb.org/t/p/',
   perfil: {},
   favoritos: [],
   jwt: '',
@@ -44,6 +44,7 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case AGREGAR_FAVORITOS: {
+      console.log('hola');
       return {
         ...state,
         favoritos: [...state.favoritos, action.payload],

@@ -15,13 +15,11 @@ export const useMovies = () => {
       const actualesPromise = movieDB.get('/movie/now_playing');
       const popularesPromise = movieDB.get('/movie/popular');
       const recomendadasPromise = movieDB.get('/movie/top_rated');
-      const configuration = movieDB.get('/configuration');
 
       const resp = await Promise.all([
         actualesPromise,
         popularesPromise,
         recomendadasPromise,
-        configuration,
       ]);
 
       setPeliculasState({
@@ -29,7 +27,7 @@ export const useMovies = () => {
         populares: resp[1].data.results,
         recomendadas: resp[2].data.results,
       });
-      dispatch(setUrlImages(resp[3].data?.images?.secure_base_url));
+
       setIsLoading(false);
     } catch (error) {
       console.log(error);
