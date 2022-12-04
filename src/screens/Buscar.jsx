@@ -10,13 +10,15 @@ import {ScrollView} from 'react-native-gesture-handler';
 import CardSearch from '../components/CardSearch';
 import {useSearchMovie} from '../hooks/useSearchMovie';
 import {useState} from 'react';
+import {useSelector} from 'react-redux';
 export default function Buscar() {
+  const {perfil} = useSelector(state => state);
   const [input, setInput] = useState('');
   const {searchPeliculas} = useSearchMovie(input);
   return (
     <View style={styles.container}>
       <View style={styles.home}>
-        <Text style={theme.title}>Hola, Alexander</Text>
+        <Text style={theme.title}>Hola, {perfil.nombre}</Text>
         <View style={styles.buscador}>
           <TextInput
             value={input}

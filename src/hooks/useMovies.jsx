@@ -15,17 +15,19 @@ export const useMovies = () => {
       const actualesPromise = movieDB.get('/movie/now_playing');
       const popularesPromise = movieDB.get('/movie/popular');
       const recomendadasPromise = movieDB.get('/movie/top_rated');
-
+      const generosPromise = movieDB.get('/genre/movie/list');
       const resp = await Promise.all([
         actualesPromise,
         popularesPromise,
         recomendadasPromise,
+        generosPromise,
       ]);
 
       setPeliculasState({
         actuales: resp[0].data.results,
         populares: resp[1].data.results,
         recomendadas: resp[2].data.results,
+        generos: resp[3].data.genres,
       });
 
       setIsLoading(false);

@@ -2,6 +2,7 @@ export const AGREGAR_USUARIO = 'AGREGAR_USUARIO';
 export const URL_IMAGES = 'URL_IMAGES';
 export const SET_JWT = 'SET_JWT';
 export const SET_DATA_USER = 'SET_DATA_USER';
+export const SET_FILTER = 'SET_FILTER';
 export const AGREGAR_FAVORITOS = 'AGREGAR_FAVORITOS';
 export const ELIMINAR_FAVORITOS = 'ELIMINAR_FAVORITOS';
 export const RECUPERAR_FAVORITOS = 'RECUPERAR_FAVORITOS';
@@ -26,4 +27,7 @@ export const agregarFavoritos = data => {
 };
 export const eliminarFavoritos = data => {
   return {type: ELIMINAR_FAVORITOS, payload: data};
+};
+export const setFilter = data => {
+  return {type: SET_FILTER, payload: data};
 };

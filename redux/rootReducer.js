@@ -4,6 +4,7 @@ import {
   ELIMINAR_FAVORITOS,
   RECUPERAR_FAVORITOS,
   SET_DATA_USER,
+  SET_FILTER,
   SET_JWT,
   URL_IMAGES,
 } from './actions';
@@ -14,6 +15,7 @@ const initialState = {
   perfil: {},
   favoritos: [],
   jwt: '',
+  filterSelect: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -62,6 +64,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favoritos: action.payload,
+      };
+    }
+    case SET_FILTER: {
+      return {
+        ...state,
+        filterSelect: action.payload,
       };
     }
 
