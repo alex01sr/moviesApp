@@ -52,7 +52,8 @@ export default function Home() {
                 return <CardCategoria key={index} genero={genero} />;
               })}
             </ScrollView>
-            <TouchableOpacity onPress={() => dispatch(setFilter('Todos'))}>
+            <TouchableOpacity
+              onPress={() => dispatch(setFilter({name: 'Todos', id: ''}))}>
               <Icon
                 name="trash-outline"
                 size={heightPercentageToDP(3)}
