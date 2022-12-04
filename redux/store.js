@@ -7,6 +7,7 @@ import rootReducer from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['filterSelect'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

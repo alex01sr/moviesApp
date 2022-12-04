@@ -36,7 +36,7 @@ export default function Home() {
   const {urlImages} = useSelector(state => state);
   const {filterPeliculas} = useFilter(filterSelect.id);
   const dispatch = useDispatch();
-  console.log(filterPeliculas);
+
   return (
     <ScrollView>
       <View style={styles.container}>

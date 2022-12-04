@@ -22,7 +22,6 @@ import {useSelector} from 'react-redux';
 import Guardar from '../components/Guardar.jsx';
 
 export default function PeliculaDetalles({navigation, route}) {
-  console.log(route.params.id);
   const {urlImages} = useSelector(state => state);
 
   const {

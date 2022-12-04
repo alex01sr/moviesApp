@@ -15,13 +15,12 @@ const initialState = {
   perfil: {},
   favoritos: [],
   jwt: '',
-  filterSelect: {},
+  filterSelect: {name: 'Todos', id: ''},
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case AGREGAR_USUARIO: {
-      console.log('base');
       return {
         ...state,
         usuarios: {...state.usuarios, [action.payload.email]: action.payload},
@@ -46,7 +45,6 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case AGREGAR_FAVORITOS: {
-      console.log('hola');
       return {
         ...state,
         favoritos: [...state.favoritos, action.payload],

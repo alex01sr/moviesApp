@@ -9,7 +9,7 @@ export const useFavoritos = movie => {
   const [state, setState] = useState(false);
   useEffect(() => {
     let item = favoritos.find(e => e.id === movie.id);
-    console.log(item, 'item');
+
     if (item) {
       setState(true);
     } else {
@@ -23,7 +23,7 @@ export const useFavoritos = movie => {
       toastGenerate('Solo puedes agregar a favoritos con una sesion activa');
       return;
     }
-    console.log(movie);
+
     setState(true);
     dispatch(agregarFavoritos(movie));
   };

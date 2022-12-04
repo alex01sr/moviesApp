@@ -7,7 +7,6 @@ import {useState} from 'react';
 export const useFilter = query => {
   const [filterPeliculas, setFilterPeliculas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(query, 'hook');
 
   const getFilter = async () => {
     try {

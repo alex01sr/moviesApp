@@ -7,7 +7,6 @@ import {useState} from 'react';
 export const useSearchMovie = query => {
   const [searchPeliculas, setSearchPeliculas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(query, 'hook');
 
   const getSearch = async () => {
     try {
