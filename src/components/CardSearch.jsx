@@ -8,6 +8,7 @@ import {colores, tamaño_texto} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import Guardar from './Guardar.jsx';
 export default function CardSearch({
   movie = {title: '', backdrop_path: '', vote_average: '', id: ''},
 }) {
@@ -27,18 +28,14 @@ export default function CardSearch({
         <Text adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
           {title}
         </Text>
-        <Text style={styles.caract}>Eng | Fiction | 2h10m</Text>
+        {/*   <Text style={styles.caract}>Eng | Fiction | 2h10m</Text> */}
         <View style={styles.rat}>
           <Icon name="star" size={heightPercentageToDP(2)} color="#FFD261" />
-          <Text style={styles.title}>{vote_average}</Text>
+          <Text style={styles.title}>{`${vote_average}`.slice(0, 3)}</Text>
         </View>
       </View>
       <View style={styles.icons}>
-        <Icon
-          name="bookmark-outline"
-          size={heightPercentageToDP(3)}
-          color="#ffffff"
-        />
+        <Guardar movie={{backdrop_path, title, vote_average, id}} />
         <View style={styles.play}>
           <Icon
             name="play"

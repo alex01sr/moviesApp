@@ -7,15 +7,17 @@ import {
 } from 'react-native-responsive-screen';
 
 import CardSearch from '../components/CardSearch';
+import {useSelector} from 'react-redux';
 export default function Favoritas() {
+  const {favoritos} = useSelector(state => state);
   return (
     <View style={styles.container}>
       <View style={styles.favoritas}>
         <Text style={theme.title}>Favoritos</Text>
 
         <ScrollView style={styles.scrollSearch}>
-          {['', '', '', '', ''].map((item, i) => {
-            return <CardSearch key={i} />;
+          {favoritos?.map((movie, i) => {
+            return <CardSearch key={i} movie={movie} />;
           })}
         </ScrollView>
       </View>

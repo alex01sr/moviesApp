@@ -28,18 +28,17 @@ import ScrollMovies from '../components/ScrollMovies';
 const categorias = ['Todas', 'Accion', 'Comedia', 'Terror'];
 
 export default function Home() {
-  const {usuarios} = useSelector(state => state);
+  const {perfil} = useSelector(state => state);
   const {actuales, populares, recomendadas, isLoading, configuration} =
     useMovies();
   const {urlImages} = useSelector(state => state);
-  console.log(usuarios);
 
   console.log(configuration?.secure_base_url);
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.home}>
-          <Text style={theme.title}>Hola, Alexander</Text>
+          <Text style={theme.title}>Hola, {perfil.nombre}</Text>
           <View style={styles.boxCategorias}>
             <ScrollView
               horizontal

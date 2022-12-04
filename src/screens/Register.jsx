@@ -10,6 +10,7 @@ import {colores, tamaño_texto} from '../theme/appTheme';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {agregarUsuario} from '../../redux/actions';
+import {toastGenerate} from '../utils/ToastGenerate';
 
 export default function Register() {
   const [register, setRegister] = useState({
@@ -23,13 +24,13 @@ export default function Register() {
   const submit = () => {
     for (const campo in register) {
       if (!register[campo]) {
-        console.log('El campo ' + campo + ' es obligatorio');
+        toastGenerate('El campo ' + campo + ' es obligatorio');
 
         return;
       }
     }
     if (usuarios[register.email]) {
-      console.log('Ya existe el usuario');
+      toastGenerate('Ya existe el usuario');
       return;
     }
     dispatch(agregarUsuario(register));

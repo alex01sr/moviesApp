@@ -11,7 +11,8 @@ import InputComponent from '../components/InputComponent';
 import HeaderTitle from '../components/HeaderTitle';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setDataUser, setJwt} from '../../redux/actions';
+import {recuperarFavoritos, setDataUser, setJwt} from '../../redux/actions';
+import {toastGenerate} from '../utils/ToastGenerate';
 export default function Login({navigation}) {
   const [acceso, setAcceso] = useState({email: '', password: ''});
   const {usuarios} = useSelector(state => state);
@@ -19,23 +20,24 @@ export default function Login({navigation}) {
   const submit = () => {
     for (const campo in acceso) {
       if (!acceso[campo]) {
-        console.log('El campo ' + campo + ' es obligatorio');
+        toastGenerate('El campo ' + campo + ' es obligatorio');
 
         return;
       }
     }
     const usuario = usuarios[acceso.email];
     if (!usuario) {
-      console.log('No tienes una cuenta creada');
+      toastGenerate('No tienes una cuenta creada');
       return;
     }
     if (usuario.password === acceso.password) {
-      console.log('Inicio exitoso');
+      toastGenerate('Inicio exitoso');
       dispatch(setJwt(usuario.email));
       dispatch(setDataUser(usuario));
+      dispatch(recuperarFavoritos(usuario.favoritos));
       navigation.goBack();
     } else {
-      console.log('Datos incorrectos');
+      toastGenerate('Datos incorrectos');
     }
   };
   console.log(acceso);

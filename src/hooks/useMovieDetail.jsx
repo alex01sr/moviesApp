@@ -7,7 +7,6 @@ import {useState} from 'react';
 export const useMovieDetail = id => {
   const [detallesPeliculas, setDetallesPeliculas] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(id, 'hook');
 
   const getDetail = async () => {
     try {

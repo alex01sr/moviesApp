@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {
@@ -18,6 +19,8 @@ import CardCast from '../components/CardCast';
 import ScrollMovies from '../components/ScrollMovies';
 import {useMovies} from '../hooks/useMovies';
 import {useSelector} from 'react-redux';
+import Guardar from '../components/Guardar.jsx';
+
 export default function PeliculaDetalles({navigation, route}) {
   console.log(route.params.id);
   const {urlImages} = useSelector(state => state);
@@ -36,7 +39,7 @@ export default function PeliculaDetalles({navigation, route}) {
     isLoading,
   } = useMovieDetail(route.params.id);
 
-  const {title, backdrop_path, overview, genres} = detalles;
+  const {title, backdrop_path, overview, genres, vote_average} = detalles;
 
   const uri = `${urlImages}w780${backdrop_path}`;
   return (
@@ -44,15 +47,22 @@ export default function PeliculaDetalles({navigation, route}) {
       <View style={styles.container}>
         <View style={styles.detalles}>
           <View style={styles.header}>
-            <Icon
-              name="arrow-back-outline"
-              size={heightPercentageToDP(4)}
-              color="white"
-            />
-            <Icon
-              name="bookmark-outline"
-              size={heightPercentageToDP(4)}
-              color="white"
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon
+                name="arrow-back-outline"
+                size={heightPercentageToDP(4)}
+                color="white"
+              />
+            </TouchableOpacity>
+
+            <Guardar
+              movie={{
+                id: route.params.id,
+                title,
+                backdrop_path,
+
+                vote_average,
+              }}
             />
           </View>
           {isLoading ? (

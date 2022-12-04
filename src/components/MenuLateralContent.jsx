@@ -17,15 +17,22 @@ import {AntDesign} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import {colores, tamaño_texto} from '../theme/appTheme';
 import ButtonMenu from './ButtonMenu';
-import {setDataUser, setJwt} from '../../redux/actions';
+import {
+  agregarUsuario,
+  recuperarFavoritos,
+  setDataUser,
+  setJwt,
+} from '../../redux/actions';
 
 export default function MenuLateralContent({routes}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {jwt, perfil} = useSelector(state => state);
+  const {jwt, perfil, favoritos} = useSelector(state => state);
 
   const submit = () => {
+    dispatch(agregarUsuario({...perfil, favoritos}));
     dispatch(setDataUser({}));
+    dispatch(recuperarFavoritos([]));
     dispatch(setJwt(''));
   };
   return (
