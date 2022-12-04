@@ -1,5 +1,12 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -7,66 +14,108 @@ import {
 import {useMovieDetail} from '../hooks/useMovieDetail';
 import {colores, tamaño_texto, theme} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CardCast from '../components/CardCast';
+import ScrollMovies from '../components/ScrollMovies';
+import {useMovies} from '../hooks/useMovies';
+import {useSelector} from 'react-redux';
 export default function PeliculaDetalles({navigation, route}) {
   console.log(route.params.id);
-  const {detalles, videos, cast} = useMovieDetail(route.params.id);
+  const {urlImages} = useSelector(state => state);
+  const idRef = useRef(0);
+  const {
+    detalles = {
+      title: '',
+      backdrop_path: '',
+      overview: '',
+      genres: [],
+      vote_average: '',
+    },
+    videos,
+    cast = [],
+    similar = [],
+    isLoading,
+  } = useMovieDetail(route.params.id);
 
-  console.log(videos);
+  const {title, backdrop_path, overview, genres} = detalles;
 
+  const uri = `${urlImages}w780${backdrop_path}`;
   return (
-    <View style={styles.container}>
-      <View style={styles.detalles}>
-        <View style={styles.header}>
-          <Icon
-            name="arrow-back-outline"
-            size={heightPercentageToDP(5)}
-            color="white"
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.detalles}>
+          <View style={styles.header}>
+            <Icon
+              name="arrow-back-outline"
+              size={heightPercentageToDP(4)}
+              color="white"
+            />
+            <Icon
+              name="bookmark-outline"
+              size={heightPercentageToDP(4)}
+              color="white"
+            />
+          </View>
+          {isLoading ? (
+            <ActivityIndicator color={colores.secondary} />
+          ) : (
+            <Image
+              style={{
+                marginTop: heightPercentageToDP(2),
+                borderRadius: 50,
+                width: widthPercentageToDP(90),
+                height: heightPercentageToDP(30),
+                resizeMode: 'cover',
+                marginHorizontal: widthPercentageToDP(2),
+                opacity: 0.7,
+              }}
+              source={
+                backdrop_path ? {uri} : require('../../assets/placeholder.png')
+              }
+            />
+          )}
+
+          <View style={styles.boxText}>
+            <Text style={[theme.title, {fontSize: heightPercentageToDP(2.5)}]}>
+              {title}
+            </Text>
+
+            <Text style={styles.textGeneros}>
+              {genres?.slice(0, 3)?.map((el, i) => {
+                return `${el.name} ${genres.length - 1 === i ? '' : '|'} `;
+              })}
+            </Text>
+            <View style={styles.divider} />
+          </View>
+          <View style={styles.description}>
+            <Text style={styles.subtitle}>Descripción</Text>
+            <Text style={styles.textDescription}>{overview}</Text>
+            <Text style={styles.subtitle}>Cast</Text>
+          </View>
+          <ScrollView
+            horizontal
+            style={styles.scrollSeccionUno}
+            showsHorizontalScrollIndicator={false}>
+            {cast?.slice(0, 5)?.map((cast, index) => {
+              return <CardCast key={index} cast={cast} url={urlImages} />;
+            })}
+          </ScrollView>
+          <ScrollMovies
+            title="Similares"
+            sizeTitle={heightPercentageToDP(2.8)}
+            movies={similar}
+            url={urlImages}
+            width={35}
           />
-          <Icon
-            name="bookmark-outline"
-            size={heightPercentageToDP(5)}
-            color="white"
-          />
-        </View>
-        <Image
-          style={{
-            marginTop: heightPercentageToDP(2),
-            borderRadius: 50,
-            width: widthPercentageToDP(90),
-            height: heightPercentageToDP(30),
-            resizeMode: 'cover',
-            marginHorizontal: widthPercentageToDP(2),
-            opacity: 0.7,
-          }}
-          source={require('../../assets/pelicula.png')}
-        />
-        <View style={styles.boxText}>
-          <Text style={[theme.title, {fontSize: heightPercentageToDP(2.5)}]}>
-            Captain America: Civil Wa{' '}
-          </Text>
-          <Text style={styles.textGeneros}> Eng | Action | 2h10m</Text>
-          <View style={styles.divider} />
-        </View>
-        <View style={styles.description}>
-          <Text style={styles.subtitle}>Story line</Text>
-          <Text style={styles.textDescription}>
-            Political involvement in the Avengers' affairs causes a rift between
-            Captain America and Iron Man. With many people fearing the actions
-            of super heroes, the government decides to push for the Hero
-            Registration Act, a law that limits a hero's actions. This results
-            in a division in The Avengers.
-          </Text>
-          <Text style={styles.subtitle}>Star cast </Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    marginBottom: heightPercentageToDP(15),
     alignItems: 'center',
   },
   detalles: {
@@ -85,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  boxText: {alignItems: 'center'},
+  boxText: {alignItems: 'center', marginTop: heightPercentageToDP(2)},
   textGeneros: {
     fontFamily: 'Roboto-Light',
     fontSize: tamaño_texto.medium,
@@ -102,6 +151,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   textDescription: {
+    textAlign: 'justify',
     fontFamily: 'Roboto-Regular',
     fontSize: tamaño_texto.medium,
     color: '#A5A5A580',

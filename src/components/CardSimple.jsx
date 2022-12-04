@@ -9,7 +9,11 @@ import {colores, tamaño_texto} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useMovies} from '../hooks/useMovies';
 import {useNavigation} from '@react-navigation/native';
-export default function CardSimple({width = 50, movie, url}) {
+export default function CardSimple({
+  width = 50,
+  movie = {title: '', backdrop_path: '', vote_average: '', id: ''},
+  url,
+}) {
   const {backdrop_path, title, vote_average, id} = movie;
   const navigation = useNavigation();
   const uri = `${url}w300${backdrop_path}`;
@@ -59,7 +63,7 @@ export default function CardSimple({width = 50, movie, url}) {
           resizeMode: 'cover',
           opacity: 0.8,
         }}
-        source={{uri}}
+        source={backdrop_path ? {uri} : require('../../assets/placeholder.png')}
       />
       {/* La libreria de desenfoque no permite la propiedad borderRadius */}
       <BlurView

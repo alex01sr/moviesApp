@@ -10,28 +10,35 @@ export const useMovieDetail = id => {
   console.log(id, 'hook');
 
   const getDetail = async () => {
-    const detallesPelicula = movieDB.get(`/movie/${id}`);
-    const videosPelicula = movieDB.get(`/movie/${id}/videos`);
-    const castPelicula = movieDB.get(`/movie/${id}/credits`);
+    try {
+      const detallesPelicula = movieDB.get(`/movie/${id}`);
+      const videosPelicula = movieDB.get(`/movie/${id}/videos`);
+      const castPelicula = movieDB.get(`/movie/${id}/credits`);
+      const similarPelicula = movieDB.get(`/movie/${id}/similar`);
 
-    const resp = await Promise.all([
-      detallesPelicula,
-      videosPelicula,
-      castPelicula,
-    ]);
+      const resp = await Promise.all([
+        detallesPelicula,
+        videosPelicula,
+        castPelicula,
+        similarPelicula,
+      ]);
 
-    setDetallesPeliculas({
-      detalles: resp[0].data,
-      videos: resp[1].data.results,
-      cast: resp[2].data.cast.slice(0, 5),
-    });
+      setDetallesPeliculas({
+        detalles: resp[0].data,
+        videos: resp[1].data.results,
+        cast: resp[2].data.cast.slice(0, 5),
+        similar: resp[3].data.results.slice(0, 5),
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getDetail();
-  }, []);
+  }, [id]);
 
   return {...detallesPeliculas, isLoading};
 };

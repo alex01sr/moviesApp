@@ -1,7 +1,8 @@
-import {AGREGAR_USUARIO} from './actions';
+import {AGREGAR_USUARIO, URL_IMAGES} from './actions';
 
 const initialState = {
   usuarios: {},
+  urlImages: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -13,6 +14,13 @@ const rootReducer = (state = initialState, action) => {
         usuarios: {...state.usuarios, [action.payload.email]: action.payload},
       };
     }
+    case URL_IMAGES: {
+      return {
+        ...state,
+        urlImages: action.payload,
+      };
+    }
+
     default:
       return state;
   }

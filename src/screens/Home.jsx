@@ -24,14 +24,15 @@ import CardCarousel from '../components/CardCarousel';
 import CardSimple from '../components/CardSimple';
 import movieDB from '../api/movieDb';
 import {useMovies} from '../hooks/useMovies';
+import ScrollMovies from '../components/ScrollMovies';
 const categorias = ['Todas', 'Accion', 'Comedia', 'Terror'];
 
 export default function Home() {
   const {usuarios} = useSelector(state => state);
   const {actuales, populares, recomendadas, isLoading, configuration} =
     useMovies();
+  const {urlImages} = useSelector(state => state);
 
-  /* const {secure_base_url = ''} = configuration; */
   const dispatch = useDispatch();
 
   console.log(configuration?.secure_base_url);
@@ -70,64 +71,24 @@ export default function Home() {
               data={actuales}
               scrollAnimationDuration={1500}
               renderItem={movie => (
-                <CardCarousel
-                  movie={movie.item}
-                  url={configuration?.secure_base_url}
-                />
+                <CardCarousel movie={movie.item} url={urlImages} />
               )}
             />
           )}
-
-          <View style={styles.seccionUno}>
-            <Text style={[theme.title, {fontSize: heightPercentageToDP(2.8)}]}>
-              Popular
-            </Text>
-            <Icon
-              name="ellipsis-horizontal"
-              size={heightPercentageToDP(4)}
-              color={colores.secondary}
-            />
-          </View>
-          <ScrollView
-            horizontal
-            style={styles.scrollSeccionUno}
-            showsHorizontalScrollIndicator={false}>
-            {populares?.map((movie, index) => {
-              return (
-                <CardSimple
-                  key={index}
-                  movie={movie}
-                  width={45}
-                  url={configuration?.secure_base_url}
-                />
-              );
-            })}
-          </ScrollView>
-          <View style={styles.seccionUno}>
-            <Text style={[theme.title, {fontSize: heightPercentageToDP(2.8)}]}>
-              Recomendadas
-            </Text>
-            <Icon
-              name="ellipsis-horizontal"
-              size={heightPercentageToDP(4)}
-              color={colores.secondary}
-            />
-          </View>
-          <ScrollView
-            horizontal
-            style={styles.scrollSeccionUno}
-            showsHorizontalScrollIndicator={false}>
-            {recomendadas?.map((movie, index) => {
-              return (
-                <CardSimple
-                  key={index}
-                  movie={movie}
-                  width={35}
-                  url={configuration?.secure_base_url}
-                />
-              );
-            })}
-          </ScrollView>
+          <ScrollMovies
+            title="Popular"
+            sizeTitle={heightPercentageToDP(2.8)}
+            movies={populares}
+            url={urlImages}
+            width={45}
+          />
+          <ScrollMovies
+            title="Recomendadas"
+            sizeTitle={heightPercentageToDP(2.8)}
+            movies={recomendadas}
+            url={urlImages}
+            width={35}
+          />
         </View>
       </View>
     </ScrollView>
@@ -151,15 +112,5 @@ const styles = StyleSheet.create({
   },
   scrollHome: {
     maxWidth: widthPercentageToDP(80),
-  },
-  scrollSeccionUno: {
-    maxWidth: widthPercentageToDP(90),
-  },
-  seccionUno: {
-    marginVertical: heightPercentageToDP(2),
-    flexDirection: 'row',
-    width: widthPercentageToDP(90),
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 });
