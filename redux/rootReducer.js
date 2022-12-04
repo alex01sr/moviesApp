@@ -1,8 +1,10 @@
-import {AGREGAR_USUARIO, URL_IMAGES} from './actions';
+import {AGREGAR_USUARIO, SET_DATA_USER, SET_JWT, URL_IMAGES} from './actions';
 
 const initialState = {
   usuarios: {},
   urlImages: '',
+  perfil: {},
+  jwt: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -18,6 +20,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         urlImages: action.payload,
+      };
+    }
+    case SET_JWT: {
+      return {
+        ...state,
+        jwt: action.payload,
+      };
+    }
+    case SET_DATA_USER: {
+      return {
+        ...state,
+        perfil: action.payload,
       };
     }
 

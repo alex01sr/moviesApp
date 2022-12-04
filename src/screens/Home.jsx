@@ -32,8 +32,7 @@ export default function Home() {
   const {actuales, populares, recomendadas, isLoading, configuration} =
     useMovies();
   const {urlImages} = useSelector(state => state);
-
-  const dispatch = useDispatch();
+  console.log(usuarios);
 
   console.log(configuration?.secure_base_url);
   return (
