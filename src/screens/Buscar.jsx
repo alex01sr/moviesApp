@@ -8,13 +8,19 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import CardSearch from '../components/CardSearch';
+import {useSearchMovie} from '../hooks/useSearchMovie';
+import {useState} from 'react';
 export default function Buscar() {
+  const [input, setInput] = useState('');
+  const {searchPeliculas} = useSearchMovie(input);
   return (
     <View style={styles.container}>
       <View style={styles.home}>
         <Text style={theme.title}>Hola, Alexander</Text>
         <View style={styles.buscador}>
           <TextInput
+            value={input}
+            onChangeText={setInput}
             placeholderTextColor="#DDDDDD50"
             style={styles.input}
             selectionColor={colores.secondary}
@@ -25,8 +31,8 @@ export default function Buscar() {
           </View>
         </View>
         <ScrollView style={styles.scrollSearch}>
-          {['', '', '', '', ''].map((item, i) => {
-            return <CardSearch key={i} id={'123456'} />;
+          {searchPeliculas?.map((movie, i) => {
+            return <CardSearch key={i} movie={movie} />;
           })}
         </ScrollView>
       </View>

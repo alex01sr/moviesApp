@@ -7,7 +7,13 @@ import {
 import {colores, tamaño_texto} from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-export default function CardSearch({id}) {
+import {useSelector} from 'react-redux';
+export default function CardSearch({
+  movie = {title: '', backdrop_path: '', vote_average: '', id: ''},
+}) {
+  const {urlImages} = useSelector(state => state);
+  const {backdrop_path, title, vote_average, id} = movie;
+  const uri = `${urlImages}w300${backdrop_path}`;
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -15,14 +21,16 @@ export default function CardSearch({id}) {
       style={styles.container}>
       <Image
         style={styles.imagen}
-        source={require('../../assets/pelicula.png')}
+        source={backdrop_path ? {uri} : require('../../assets/placeholder.png')}
       />
       <View style={styles.boxTitle}>
-        <Text style={styles.title}> Harry Potter 7</Text>
+        <Text adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
+          {title}
+        </Text>
         <Text style={styles.caract}>Eng | Fiction | 2h10m</Text>
         <View style={styles.rat}>
           <Icon name="star" size={heightPercentageToDP(2)} color="#FFD261" />
-          <Text style={styles.title}>4.5</Text>
+          <Text style={styles.title}>{vote_average}</Text>
         </View>
       </View>
       <View style={styles.icons}>
@@ -71,6 +79,7 @@ const styles = StyleSheet.create({
   },
   boxTitle: {
     /*   marginLeft: widthPercentageToDP(2), */
+    width: widthPercentageToDP(30),
     height: widthPercentageToDP(30),
     justifyContent: 'space-between',
   },

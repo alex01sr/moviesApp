@@ -21,7 +21,7 @@ import {useSelector} from 'react-redux';
 export default function PeliculaDetalles({navigation, route}) {
   console.log(route.params.id);
   const {urlImages} = useSelector(state => state);
-  const idRef = useRef(0);
+
   const {
     detalles = {
       title: '',
